@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="you_lose">YOU LOSE!</string>
+    <string name="you_win">YOU WIN!</string>
+    <string name="better_luck">Better Luck Next Time.</string>
+    <string name="congrats">Congratulations</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="play_again">Play Again</string>
+    <string name="player_name">Player Name</string>
+    <string name="score">Score:</string>
+    <string name="score_value">10</string>
+    <string name="coins">Coins:</string>
+    <string name="coins_value">10</string>
+    <string name="Level">Level:</string>
+    <string name="Level_value">10</string>
+    <string name="OK">OK</string>
+</resources>

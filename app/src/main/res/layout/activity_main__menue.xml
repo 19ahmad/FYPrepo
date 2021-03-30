@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background1"
+    android:padding="30dp"
+
+    tools:context=".main_Menu">
+
+    <Button
+        android:id="@+id/playTrial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:textSize="20sp"
+        android:text="PLAY TRIAL"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_button_1"
+        />
+    <Button
+        android:id="@+id/startNewGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:textSize="20sp"
+        android:text="Invite Players"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_button_1"
+        />
+    <Button
+        android:id="@+id/playeProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:textSize="20sp"
+        android:text="View Player Profile"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_button_1"
+        />
+    <Button
+        android:id="@+id/logOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:textSize="20sp"
+        android:text="Log Out"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_button_1"
+        />
+
+</LinearLayout>

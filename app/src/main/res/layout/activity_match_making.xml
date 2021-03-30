@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="5dp"
+    android:background="@color/background1"
+    tools:context=".matchMaking">
+    <Button
+        android:id="@+id/iButton1"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="invite Friends"
+        android:textSize="20sp"
+        android:background="@drawable/rounded_button_1"
+        android:layout_margin="5dp"
+        />
+    <Button
+        android:id="@+id/iButton2"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="invite all"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_button_1"
+        android:layout_margin="5dp"/>
+
+</LinearLayout>
