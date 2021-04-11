@@ -15,30 +15,11 @@
         android:src="@drawable/ic_account_circle_black_24dp"
         android:padding="40dp"
         />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:weightSum="3"
-        >
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/ccp"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            app:ccp_autoDetectCountry="true"
-            app:ccp_showNameCode="true"
-            app:ccpDialog_textColor="@color/buttonColor"
-            />
         <com.google.android.material.textfield.TextInputLayout
 
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Phone Number"
-            android:layout_weight="2"
             android:focusableInTouchMode="true"
             android:focusable="true"
             app:boxStrokeColor="@color/buttonColor"
@@ -53,10 +34,10 @@
                 android:fontFamily="serif"
                 android:textColorHint="@color/buttonColor"
                 android:padding="10dp"
+                android:drawableLeft="@drawable/phone_number"
+                android:drawablePadding="10dp"
                 />
-
         </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.example.myapplication.R;
@@ -16,6 +17,7 @@ public class em_profile_list extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_em_profile_list);
+        this.setTitle("Profiles List");
         em_profile_list = findViewById(R.id.rec_prof_list);
 
        em_profile_list.setLayoutManager(new LinearLayoutManager(this));

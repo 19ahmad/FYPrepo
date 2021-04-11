@@ -12,10 +12,13 @@ import java.util.TimerTask;
 
 public class main_Menu extends AppCompatActivity implements View.OnClickListener {
 
+    String _phoneNumber = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main__menue);
+        this.setTitle("Home");
 
         Button b1 = (Button) findViewById(R.id.playTrial);
         Button b2 = (Button) findViewById(R.id.startNewGame);
@@ -27,6 +30,9 @@ public class main_Menu extends AppCompatActivity implements View.OnClickListener
         b2.setOnClickListener(this);
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
+
+  //      Intent i = getIntent();
+  //        _phoneNumber = i.getExtras().getString("PHONENUMBER");
     }
 
     @Override
@@ -42,7 +48,9 @@ public class main_Menu extends AppCompatActivity implements View.OnClickListener
 
             case R.id.playeProfile:
                 Intent in3 = new Intent(main_Menu.this, player_profile.class);
+                in3.putExtra("PHONENUMBER",_phoneNumber);
                 startActivity(in3);
+                finish();
                 break;
 
             case R.id.logOut:

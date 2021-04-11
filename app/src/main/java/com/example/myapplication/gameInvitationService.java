@@ -23,7 +23,9 @@ public class gameInvitationService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-       generateNotification(remoteMessage.getNotification().getBody(),remoteMessage.getNotification().getTitle());
+        body = remoteMessage.getData().get("Body");
+        title = remoteMessage.getData().get("Title");
+       generateNotification(body,title);
     }
 
     public void generateNotification(String body, String title) {

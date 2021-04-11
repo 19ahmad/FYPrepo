@@ -26,23 +26,18 @@ public class wUserLogin extends AppCompatActivity {
     private EditText phoneNumber,password;
     private Button login;
     private TextView signUp;
-    private CountryCodePicker _ccpl;
-    String fullNumber="";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_w_user_login);
+        this.setTitle("Login");
 
         phoneNumber = findViewById(R.id.phoneNumber);
         password = findViewById(R.id.pwd);
         login = findViewById(R.id.login);
         signUp = findViewById(R.id.sign_Up);
-        _ccpl  =findViewById(R.id.ccp);
-
-        //fullNumber = _ccpl.getFullNumber().toString() + phoneNumber.getText();
-
-        signUp.setOnClickListener(new View.OnClickListener() {
+        signUp.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(wUserLogin.this,wUserSignup.class);
@@ -57,7 +52,6 @@ public class wUserLogin extends AppCompatActivity {
                 if (!validatePhoneNumber() | !validatePassword()) {
                     Intent intent2 = new Intent(wUserLogin.this,importChat.class);
                     startActivity(intent2);
-                    return;
                 } else {
                     isUser();
                     //Intent intent = new Intent(MainActivity.this, profiles_list.class);
@@ -71,7 +65,7 @@ public class wUserLogin extends AppCompatActivity {
 
     private void isUser()
     {
-       // final String _phoneNumber = phoneNumber.getText().toString().trim();
+       final String _phoneNumber = phoneNumber.getText().toString().trim();
         final String _password = password.getText().toString().trim();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -82,7 +76,7 @@ public class wUserLogin extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dt: dataSnapshot.getChildren()){
-                    if(dt.child("phoneNo").getValue().toString().equals(fullNumber)){
+                    if(dt.child("phoneNo").getValue().toString().equals(_phoneNumber)){
                         //Toast.makeText(MainActivity.this,"Phone No Exits, in checking!!", Toast.LENGTH_LONG).show();
 
                         String passwordFromDB = dt.child("passwrd").getValue().toString();
@@ -91,6 +85,7 @@ public class wUserLogin extends AppCompatActivity {
                             Toast.makeText(wUserLogin.this,"Login Successfully", Toast.LENGTH_LONG).show();
                             phoneNumber.setError(null);
                             Intent intent2 = new Intent(wUserLogin.this,em_profile_list.class);
+                            intent2.putExtra("number",_phoneNumber);
                             startActivity(intent2);
 
                         }

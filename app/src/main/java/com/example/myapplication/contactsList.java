@@ -28,15 +28,30 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class contactsList extends AppCompatActivity implements adapter.ItemClickListener {
+    private APIService apiService;
+    String title = "Game Invitation";
+    String body = "Would you like to play game with me?";
 
     //FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -45,8 +60,12 @@ public class contactsList extends AppCompatActivity implements adapter.ItemClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
+        this.setTitle("Players List");
         contactList = findViewById(R.id.rec_contact_list);
         contactList.setLayoutManager(new LinearLayoutManager(this));
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
         List<ContactModel> contacts = requestContactPermission();
         for (final ContactModel i : contacts){
             Log.e("Name", i.name);
@@ -145,11 +164,60 @@ public class contactsList extends AppCompatActivity implements adapter.ItemClick
     @Override
     public void onItemClick(View view, int position)
     {
+        FirebaseDatabase.getInstance().getReference("players").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dt: dataSnapshot.getChildren())
+                {
+                    if(dt.child("token").getValue().toString() != null) {
+                        String userToken = dt.child("token").getValue().toString();
+                        sendNotifications(userToken, body, title);
+                    }
+                    else
+                    {
+                        Toast.makeText(contactsList.this, "Token has null value", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
 
-//        String title = "Game Invitation";
-//        String body = "Would You Like to Play Game?";
-//
-//        gameInvitationService gis  = new gameInvitationService();
-//        gis.generateNotification(title,body);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        updateToken();
+    }
+
+    private void updateToken()
+    {
+        //FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String refreshToken = FirebaseInstanceId.getInstance().getToken();
+        profileRegistration profile_registration = new profileRegistration();
+        profile_registration.setToken(refreshToken);
+        FirebaseDatabase.getInstance().getReference("players").getRef().child("token").setValue(profile_registration.getToken());
+        //Toast.makeText(this, "Token =: "+refreshToken + "Root: " +FirebaseDatabase.getInstance().getReference("players").getRoot().toString(), Toast.LENGTH_LONG).show();
+        Log.d("Token: ",refreshToken  );
+    }
+    public void sendNotifications(String userToken,String body, String title)
+    {
+        NotificationData data = new NotificationData(body,title);
+        NotificationSender sender = new NotificationSender(data, userToken);
+        apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if (response.code() == 200)
+                {
+                    if (!response.isSuccessful())
+                    {
+                        Toast.makeText(contactsList.this, "Send Notification Failed", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

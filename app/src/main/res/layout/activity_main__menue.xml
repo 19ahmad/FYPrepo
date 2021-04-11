@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:textSize="20sp"
-        android:text="Invite Players"
+        android:text="Start new game"
         android:textColor="@color/white"
         android:background="@drawable/rounded_button_1"
         />

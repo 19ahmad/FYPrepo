@@ -45,30 +45,13 @@
                 android:drawablePadding="10dp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:layout_margin="10dp"
-           android:weightSum="3"
-           >
-           <com.hbb20.CountryCodePicker
-               android:id="@+id/ccp"
-               android:layout_height="match_parent"
-               android:layout_width="0dp"
-               android:layout_weight="1"
-               android:gravity="center"
-               app:ccp_autoDetectCountry="true"
-               app:ccp_showNameCode="true"
-               app:ccpDialog_textColor="@color/buttonColor"
-               />
-           <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
 
-               android:layout_width="0dp"
+               android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:hint="Phone Number"
-               android:layout_weight="2"
                app:endIconMode="clear_text"
+            android:layout_margin="10dp"
                app:boxStrokeColor="@color/colorPrimaryDark"
                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                <com.google.android.material.textfield.TextInputEditText
@@ -78,10 +61,11 @@
                    android:inputType="phone"
                    android:maxLength="10"
                    android:textColor="@color/colorPrimaryDark"
+                   android:drawableLeft="@drawable/phone_number"
+                   android:drawablePadding="10dp"
                   />
 
-           </com.google.android.material.textfield.TextInputLayout>
-       </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
 
             android:layout_width="match_parent"

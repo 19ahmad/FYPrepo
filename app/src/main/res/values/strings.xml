@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Emotify</string>
     <string name="you_lose">YOU LOSE!</string>
     <string name="you_win">YOU WIN!</string>
     <string name="better_luck">Better Luck Next Time.</string>

@@ -40,6 +40,7 @@ public class number_verification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_verification);
+        this.setTitle("Number Verification");
 
         verifyBtn = findViewById(R.id.verify_button);
         progressBar = findViewById(R.id.progress_bar);
@@ -67,9 +68,9 @@ public class number_verification extends AppCompatActivity {
 
     private void sendVerificationCode(String phoneNo)
     {
-        //String completePhoneNumber = "+92" + phoneNo;
+        String completePhoneNumber = "+92" + phoneNo;
         PhoneAuthOptions options = PhoneAuthOptions.newBuilder(firebaseAuth)
-                .setPhoneNumber(phoneNo)
+                .setPhoneNumber(completePhoneNumber)
                 .setTimeout(60L, TimeUnit.SECONDS)
                 .setCallbacks(mCallbacks)
                 .setActivity(this)

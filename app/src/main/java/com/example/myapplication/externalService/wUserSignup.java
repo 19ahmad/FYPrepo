@@ -22,15 +22,14 @@ public class wUserSignup extends AppCompatActivity {
     private EditText name,phoneNumber,DOB,password;
     private Button signUp;
     private TextView signIn;
-    private CountryCodePicker _ccp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_w_user_signup);
+        this.setTitle("Sign up");
 
         name = findViewById(R.id.uname);
         phoneNumber = findViewById(R.id.phoneNumber);
-        _ccp = findViewById(R.id.ccp);
         DOB = findViewById(R.id.dob);
         password = findViewById(R.id.pwd);
         signUp = findViewById(R.id.register);
@@ -46,22 +45,17 @@ public class wUserSignup extends AppCompatActivity {
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference= firebaseDatabase.getReference("users");
                     String key = databaseReference.push().getKey();
-
                     String _fullName = name.getText().toString().trim();
                     String _phoneNumber = phoneNumber.getText().toString().trim();
                     String _dob = DOB.getText().toString().trim();
                     String _password = password.getText().toString().trim();
-
-
-                    String completePhoneNumber = _ccp.getFullNumber() + _phoneNumber;
-
                     RegistrationDB registrationDB = new RegistrationDB(_fullName,_phoneNumber,_dob,_password);
                     databaseReference.child(key).setValue(registrationDB);
 
                     // move to next activity
 
                     Intent intent1 = new Intent(getApplicationContext(), number_verification.class);
-                    intent1.putExtra("phoneNumber",completePhoneNumber);
+                    intent1.putExtra("phoneNumber",_phoneNumber);
                     startActivity(intent1);
                 }
             }

@@ -22,6 +22,7 @@ public class guess_emotion extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess_emotion);
 
+
         Button stopButton = (Button) findViewById(R.id.stopBtn);
         Button quitButton = (Button) findViewById(R.id.quitBtn);
         Button submit = (Button) findViewById(R.id.submitBtn);

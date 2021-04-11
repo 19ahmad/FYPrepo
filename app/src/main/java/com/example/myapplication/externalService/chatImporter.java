@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 public class chatImporter {
 //ArrayList<HashMap<String,String>>
-    public static String getData(String path) {
+    public static ArrayList<HashMap<String,String>> getData(String path) {
         // TODO Auto-generated method stub
 
         File f = new File(path);
@@ -272,7 +272,7 @@ public class chatImporter {
             e1.printStackTrace();
         }
         //f.close();
-        return parsedData.toString();
+        return parsedData;
     }
 
 
