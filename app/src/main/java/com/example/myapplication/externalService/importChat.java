@@ -151,7 +151,7 @@ public class importChat extends AppCompatActivity {
 //                    Log.d("message", " :    "+ i.get("message"));
 //                    Log.d("-------", "--------------------------------------------------------------------------------------------------------------\n\n\n");
                     Log.d("CHAT ITEMS", "List items " + chatData.size());
-                    //uploadData(mDatabase,i,"3156738688");
+                    uploadData(mDatabase,i,"3431401398");
                     count+=1;
                     Log.d("", "COUNT = "+ count);
 
@@ -193,8 +193,8 @@ public class importChat extends AppCompatActivity {
 
         String key = usr.child("chats").getRef().push().getKey();
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-//        String format = s.format(new Date());
-//        db.child("chats").child(currentUser).child(format).child(key).getRef().setValue(msg1);
+        String format = s.format(new Date());
+        db.child("chats").child(currentUser).child(format).child(key).getRef().setValue(msg1);
 
 
 

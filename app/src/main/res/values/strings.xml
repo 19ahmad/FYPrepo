@@ -14,4 +14,7 @@
     <string name="Level">Level:</string>
     <string name="Level_value">10</string>
     <string name="OK">OK</string>
+    <string name="Splash_Text">Emotional Profile Identification of WhatsApp Users</string>
+    <string name="Splash_Text1">A Game based Application to Identify Emotional Profile of WhatsApp Users</string>
+
 </resources>

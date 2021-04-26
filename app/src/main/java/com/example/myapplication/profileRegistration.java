@@ -2,7 +2,7 @@ package com.example.myapplication;
 
 public class profileRegistration {
 
-    String  key,dob,username,password,phoneNumber,fullName,gender,token;
+    String  key,dob,username,password,phoneNumber,fullName,gender;
 
     //empty constructor
     public profileRegistration(){}
@@ -10,9 +10,9 @@ public class profileRegistration {
 
 
     // constructor with parameters
-    public profileRegistration(String fullName, String username, String phoneNumber, String password, String dob, String gender,String token )
+    public profileRegistration(String fullName, String username, String phoneNumber, String password, String dob, String gender )
     {
-        this.token = token;
+        //this.token = token;
         this.fullName = fullName;
         this.username = username;
         this.password = password;
@@ -24,13 +24,6 @@ public class profileRegistration {
 // getter and setter
 
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public  String getDob() {
         return dob;

@@ -1,17 +1,29 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.zip.Inflater;
@@ -19,8 +31,9 @@ import java.util.zip.Inflater;
 public class guess_topic_of_discussion extends AppCompatActivity implements View.OnClickListener {
 
     CountDownTimer countDownTimer;
-    TextView textView;
+    TextView textView,msg;
     EditText editText;
+    DatabaseReference db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +43,22 @@ public class guess_topic_of_discussion extends AppCompatActivity implements View
         Button quitButton = (Button) findViewById(R.id.quit);
         Button ok = (Button) findViewById(R.id.submit);
         textView = (TextView) findViewById(R.id.time1);
+        msg = (TextView) findViewById(R.id.message);
         editText = (EditText) findViewById(R.id.emotionalState);
+        db = FirebaseDatabase.getInstance().getReference();
 
         stpButton.setOnClickListener(this);
         quitButton.setOnClickListener(this);
         ok.setOnClickListener(this);
+        ArrayList<DataSnapshot> dt = null;
+
+            dt = getData(db,"3431401398");
+
+        if(dt != null){
+            Log.d("onCreate", "Children Count : "+dt.size());;
+        }
+        else
+            Log.d("isEmpty", "onCreate: Empty object");
 
 
         countDownTimer = new CountDownTimer(60000,1000) {
@@ -67,6 +91,7 @@ public class guess_topic_of_discussion extends AppCompatActivity implements View
         {
             case R.id.stop:
                 showStopMenuDialogue();
+
                 countDownTimer.cancel();
                 break;
             case R.id.quit:
@@ -92,8 +117,28 @@ public class guess_topic_of_discussion extends AppCompatActivity implements View
     {
         LayoutInflater lInflater = LayoutInflater.from(this);
         View view = lInflater.inflate(R.layout.lose_dialog, null);
+        Button playAgain =  view.findViewById(R.id.playagain);
+        Button mainMenu =  view.findViewById(R.id.mainmenu);
+        playAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getApplicationContext(), guess_topic_of_discussion.class);
+                startActivity(intent1);
+            }
+        });
+        mainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(getApplicationContext(), main_Menu.class);
+
+                startActivity(intent2);
+                finish();
+            }
+        });
         AlertDialog alertDialog = new AlertDialog.Builder(this).setView(view).create();
         alertDialog.show();
+
+
     }
     public void showWinDialogue()
     {
@@ -107,14 +152,65 @@ public class guess_topic_of_discussion extends AppCompatActivity implements View
     {
         LayoutInflater lInflater = LayoutInflater.from(this);
         View view = lInflater.inflate(R.layout.activity_stop_menu, null);
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setView(view).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).setView(view).create();
         alertDialog.show();
         Button resumeBtn = (Button) alertDialog.findViewById(R.id.resume);
         Button quitBtn = (Button) alertDialog.findViewById(R.id.quitButton);
-        Button mainMenuBtn = (Button) alertDialog.findViewById(R.id.mainMenuButton);
+        final Button mainMenuBtn = (Button) alertDialog.findViewById(R.id.mainMenuButton);
 
-        resumeBtn.setOnClickListener(this);
-        quitBtn.setOnClickListener(this);
-        mainMenuBtn.setOnClickListener(this);
+        resumeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent3  = new Intent(getApplicationContext(),guess_topic_of_discussion.class);
+                alertDialog.hide();
+                //startActivity(intent3);
+            }
+        });
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent4 = new Intent(getApplicationContext(),main_Menu.class);
+                Toast.makeText(getApplicationContext(), "Game Finished", Toast.LENGTH_SHORT).show();
+                startActivity(intent4);
+            }
+        });
+        mainMenuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent5 = new Intent(getApplicationContext(),main_Menu.class);
+                startActivity(intent5);
+            }
+        });
+    }
+
+    ArrayList<DataSnapshot> getData(DatabaseReference db, String currentUser) {
+        String p = "/chats/"+currentUser;
+        DatabaseReference r = db.child(p).getRef();
+        Task<DataSnapshot> d = r.get();
+        final ArrayList<DataSnapshot> dt = new ArrayList<DataSnapshot>();
+        d.addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    Log.d("GET TIMESTAMP", "DATA: "+task.getResult().getValue());
+                    dt.add(task.getResult());
+                }
+            }
+        });
+
+        if(!d.isComplete()){
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        Log.d("Check size", "getData: Count : "+d.isComplete()+"   "+  dt.size());
+        return dt;
     }
 }

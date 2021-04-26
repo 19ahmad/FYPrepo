@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,8 +19,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -27,6 +32,8 @@ import com.hbb20.CountryCodePicker;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class SignUp extends AppCompatActivity {
 
@@ -106,9 +113,15 @@ public class SignUp extends AppCompatActivity {
                         if (genderfemale.isChecked()) {
                             _gender = "Feamle";
                         }
-                        String refreshToken = FirebaseInstanceId.getInstance().getToken();
-                        profileRegistration _profileRegistration = new profileRegistration(_fullName,_username,_phoneNumber,_password,_dob,_gender,refreshToken);
+                        final String refreshToken = FirebaseInstanceId.getInstance().getToken();
+                        profileRegistration _profileRegistration = new profileRegistration(_fullName,_username,_phoneNumber,_password,_dob,_gender);
                        // updateToken(key);
+                        databaseReference.child("Device Tokens").child(_phoneNumber).child("token").setValue(refreshToken).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("token", refreshToken);
+                            }
+                        });
                         databaseReference.child("players").child(key).setValue(_profileRegistration).addOnSuccessListener(new OnSuccessListener<Void>() {
 
 
@@ -236,4 +249,6 @@ public class SignUp extends AppCompatActivity {
         Token token = new Token(refreshToken);
         FirebaseDatabase.getInstance().getReference("players").child(key).setValue(token);
     }
+
+
 }

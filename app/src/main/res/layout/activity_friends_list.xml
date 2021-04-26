@@ -46,7 +46,8 @@
         app:backgroundTint="@color/buttonColor"
         app:elevation="6dp"
         app:fabSize="normal"
-        android:src="@drawable/ic_baseline_add_24"/>
+        android:src="@drawable/ic_baseline_add_24"
+        />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -42,7 +42,7 @@ public class main_Menu extends AppCompatActivity implements View.OnClickListener
             case R.id.playTrial:
 
             case R.id.startNewGame:
-                Intent in = new Intent(getApplicationContext(), matchMaking.class);
+                Intent in = new Intent(getApplicationContext(), guess_topic_of_discussion.class);
                 startActivity(in);
                 break;
 

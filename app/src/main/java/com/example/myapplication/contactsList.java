@@ -164,13 +164,14 @@ public class contactsList extends AppCompatActivity implements adapter.ItemClick
     @Override
     public void onItemClick(View view, int position)
     {
-        FirebaseDatabase.getInstance().getReference("players").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Device Tokens").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dt: dataSnapshot.getChildren())
                 {
-                    if(dt.child("token").getValue().toString() != null) {
+                     if(dt.child("token").getValue().toString() != null) {
                         String userToken = dt.child("token").getValue().toString();
+                        Log.d("Token is: ", userToken);
                         sendNotifications(userToken, body, title);
                     }
                     else
@@ -193,20 +194,23 @@ public class contactsList extends AppCompatActivity implements adapter.ItemClick
         //FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String refreshToken = FirebaseInstanceId.getInstance().getToken();
         profileRegistration profile_registration = new profileRegistration();
-        profile_registration.setToken(refreshToken);
-        FirebaseDatabase.getInstance().getReference("players").getRef().child("token").setValue(profile_registration.getToken());
+        //profile_registration.setToken(refreshToken);
+        //FirebaseDatabase.getInstance().getReference("Device Tokens").child("token").setValue(profile_registration.getToken());
         //Toast.makeText(this, "Token =: "+refreshToken + "Root: " +FirebaseDatabase.getInstance().getReference("players").getRoot().toString(), Toast.LENGTH_LONG).show();
         Log.d("Token: ",refreshToken  );
     }
     public void sendNotifications(String userToken,String body, String title)
     {
+        //Toast.makeText(contactsList.this, "Send Notification Failed", Toast.LENGTH_LONG).show();
         NotificationData data = new NotificationData(body,title);
         NotificationSender sender = new NotificationSender(data, userToken);
+
         apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
             @Override
             public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                 if (response.code() == 200)
                 {
+
                     if (!response.isSuccessful())
                     {
                         Toast.makeText(contactsList.this, "Send Notification Failed", Toast.LENGTH_LONG).show();

@@ -73,6 +73,7 @@
                     android:fontFamily="serif"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_button_1"
+                    android:id="@+id/mainmenu"
                     />
                 <Button
                     android:layout_width="105dp"
@@ -83,6 +84,7 @@
                     android:fontFamily="serif"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_button_1"
+                    android:id="@+id/playagain"
                     />
             </LinearLayout>
 

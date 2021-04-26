@@ -112,6 +112,7 @@
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/textview_border"
@@ -128,13 +129,16 @@
             android:focusableInTouchMode="true"
             app:counterEnabled="true"
             app:counterMaxLength="15"
+            android:textColorHint="@color/buttonColor"
+            app:hintTextColor="@color/buttonColor"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="20dp"
             app:boxStrokeColor="@color/buttonColor"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
+
                 android:id="@+id/emotionalState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,7 +147,7 @@
                 android:inputType="text"
                 android:textSize="20sp"
                 android:fontFamily="serif"
-                android:textColorHint="@color/buttonColor"
+                android:textColor="@color/buttonColor"
                 android:padding="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button

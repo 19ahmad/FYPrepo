@@ -15,20 +15,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".matchMaking"></activity>
+        <activity android:name=".splashScreen"></activity>
+        <activity android:name=".externalService.emotional_profile" />
+        <activity android:name=".matchMaking" />
         <activity android:name=".externalService.importChat" />
         <activity android:name=".externalService.em_profile_list" />
         <activity android:name=".externalService.number_verification" />
         <activity android:name=".externalService.wUserSignup" />
-        <activity android:name=".externalService.wUserLogin"/>
+        <activity android:name=".externalService.wUserLogin" />
         <activity android:name=".login" />
         <activity android:name=".contactsList" />
         <activity android:name=".friendsList" />
         <activity android:name=".player_profile" />
-        <activity android:name=".guess_emotion"
-                  android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
-        <activity android:name=".guess_topic_of_discussion"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+        <activity
+            android:name=".guess_emotion"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+        <activity
+            android:name=".guess_topic_of_discussion"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity android:name=".main_Menu" />
         <activity android:name=".SignUp" />
         <activity android:name=".homeActivity">
