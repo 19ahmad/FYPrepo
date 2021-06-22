@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".contactsList">
+    tools:context=".gameModule.contactsList">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_contact_list"
         android:layout_width="match_parent"

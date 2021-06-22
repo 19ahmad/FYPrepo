@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background1"
+    android:background="@color/white"
     android:padding="10dp"
     android:gravity="center"
     android:orientation="vertical"
@@ -12,9 +12,10 @@
 
     <ImageView
         android:id="@+id/ac"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
         android:src="@drawable/account_circle"
+        android:layout_margin="40dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,18 +29,18 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Phone Number"
+            android:hint="Email"
+            app:startIconDrawable="@drawable/email"
+            app:startIconTint="@color/buttonColor"
             app:endIconMode="clear_text"
-            app:boxStrokeColor="@color/colorPrimaryDark"
+            app:boxStrokeColor="@color/buttonColor"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneNumber"
+                android:id="@+id/esLoginEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:maxLength="9"
-                android:textColor="@color/colorPrimaryDark"
-                android:drawableLeft="@drawable/phone_number"
+                android:textColor="@color/buttonColor"
                 android:drawablePadding="10dp"
                 />
 
@@ -50,7 +51,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        app:boxStrokeColor="@color/colorPrimaryDark"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/buttonColor"
+        app:startIconDrawable="@drawable/password"
+        app:startIconTint="@color/buttonColor"
+        app:boxStrokeColor="@color/buttonColor"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
@@ -58,29 +63,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:drawableLeft="@drawable/password"
             android:drawablePadding="10dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/login"
-        android:layout_width="250sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
         android:textSize="20sp"
         android:textColor="@color/white"
-        android:fontFamily="monospace"
+
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:elevation="2dp"
-        android:background="@drawable/rounded_button"
+        android:elevation="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/round_shape_button"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_margin="5dp">
         <TextView
             android:id="@+id/text0"
             android:layout_width="wrap_content"
@@ -93,7 +98,6 @@
             android:id="@+id/sign_Up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
             android:text="Sign up"
             android:textSize="12.5sp"
             android:textColor="@color/colorPrimary"

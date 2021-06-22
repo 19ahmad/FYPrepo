@@ -1,5 +1,6 @@
 package com.example.myapplication.externalService;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,8 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
@@ -19,7 +25,9 @@ public class wUserSignup extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    private EditText name,phoneNumber,DOB,password;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    private EditText name,phoneNumber,DOB,password,email;
     private Button signUp;
     private TextView signIn;
     @Override
@@ -32,6 +40,7 @@ public class wUserSignup extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumber);
         DOB = findViewById(R.id.dob);
         password = findViewById(R.id.pwd);
+        email = findViewById(R.id.esEmail);
         signUp = findViewById(R.id.register);
         signIn = findViewById(R.id.sign_in);
 
@@ -44,19 +53,42 @@ public class wUserSignup extends AppCompatActivity {
                 } else {
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseReference= firebaseDatabase.getReference("users");
-                    String key = databaseReference.push().getKey();
-                    String _fullName = name.getText().toString().trim();
-                    String _phoneNumber = phoneNumber.getText().toString().trim();
-                    String _dob = DOB.getText().toString().trim();
-                    String _password = password.getText().toString().trim();
-                    RegistrationDB registrationDB = new RegistrationDB(_fullName,_phoneNumber,_dob,_password);
-                    databaseReference.child(key).setValue(registrationDB);
+                    final String key = databaseReference.push().getKey();
+                    final String _fullName = name.getText().toString().trim();
+                    final String _email = email.getText().toString().trim();
+                    final String _phoneNumber = phoneNumber.getText().toString().trim();
+                    final String _dob = DOB.getText().toString().trim();
+                    final String _password = password.getText().toString().trim();
 
-                    // move to next activity
+                    mAuth.createUserWithEmailAndPassword(_email, _password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful())
+                            {
+                                RegistrationDB registrationDB = new RegistrationDB(_fullName,_phoneNumber,_dob,_email);
+                                databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(registrationDB).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful())
+                                        {
+                                            Intent intent1 = new Intent(getApplicationContext(), number_verification.class);    // move to next activity
+                                            intent1.putExtra("phoneNumber",_phoneNumber);
+                                            startActivity(intent1);
+                                        }
+                                        else
+                                            {
+                                                Toast.makeText(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
+                                            }
+                                    }
+                                });
 
-                    Intent intent1 = new Intent(getApplicationContext(), number_verification.class);
-                    intent1.putExtra("phoneNumber",_phoneNumber);
-                    startActivity(intent1);
+                            }
+                            else
+                                {
+                                    Toast.makeText(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
+                                }
+                        }
+                    });
                 }
             }
         });

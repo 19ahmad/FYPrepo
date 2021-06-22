@@ -1,7 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
 
 public class MyResponse {
-    public  NotificationData data;
+    public NotificationData data;
     public String to;
 
     public MyResponse(NotificationData data, String to) {

@@ -1,19 +1,11 @@
-package com.example.myapplication;
-
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
+package com.example.myapplication.gameModule;
 
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdReceiver;
-import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class getDeviceToken extends FirebaseMessagingService {

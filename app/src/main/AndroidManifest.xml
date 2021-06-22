@@ -15,40 +15,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".splashScreen"></activity>
-        <activity android:name=".externalService.emotional_profile" />
-        <activity android:name=".matchMaking" />
-        <activity android:name=".externalService.importChat" />
-        <activity android:name=".externalService.em_profile_list" />
-        <activity android:name=".externalService.number_verification" />
-        <activity android:name=".externalService.wUserSignup" />
-        <activity android:name=".externalService.wUserLogin" />
-        <activity android:name=".login" />
-        <activity android:name=".contactsList" />
-        <activity android:name=".friendsList" />
-        <activity android:name=".player_profile" />
-        <activity
-            android:name=".guess_emotion"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
-        <activity
-            android:name=".guess_topic_of_discussion"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
-        <activity android:name=".main_Menu" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".homeActivity">
+        <activity android:name=".gameModule.splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".externalService.emotional_profile" />
+        <activity android:name=".gameModule.matchMaking" />
+        <activity android:name=".externalService.importChat" />
+        <activity android:name=".externalService.em_profile_list" />
+        <activity android:name=".externalService.number_verification" />
+        <activity android:name=".externalService.wUserSignup" />
+        <activity android:name=".externalService.wUserLogin" />
+        <activity android:name=".gameModule.login" />
+        <activity android:name=".gameModule.contactsList" />
+        <activity android:name=".gameModule.friendsList" />
+        <activity android:name=".gameModule.player_profile" />
+        <activity android:name=".gameModule.guess_emotion" />
+        <activity android:name=".gameModule.guess_topic_of_discussion"/>
+        <activity android:name=".gameModule.main_Menu" />
+        <activity android:name=".gameModule.SignUp" />
+        <activity android:name=".gameModule.homeActivity">
+        </activity>
 
-        <service android:name=".gameInvitationService">
+        <service android:name=".gameModule.gameInvitationService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".getDeviceToken">
+        <service android:name=".gameModule.getDeviceToken">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

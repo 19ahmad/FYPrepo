@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.myapplication.R;
 import com.example.myapplication.externalService.wUserLogin;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class homeActivity extends AppCompatActivity {
     private Button playerLogin,wUserLogin;
@@ -23,8 +27,12 @@ public class homeActivity extends AppCompatActivity {
         playerLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(homeActivity.this, login.class);
-                startActivity(intent1);
+
+                Intent intent2 = new Intent(homeActivity.this, login.class);
+                //Toast.makeText(homeActivity.this, "No user is siggned in", Toast.LENGTH_SHORT).show();
+                startActivity(intent2);
+
+
 
             }
         });

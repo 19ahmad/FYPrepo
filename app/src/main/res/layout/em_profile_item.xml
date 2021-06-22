@@ -5,6 +5,9 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:layout_margin="10dp"
+    android:background="@drawable/rounded_layout"
+    android:elevation="10dp"
     android:padding="5dp">
     <ImageView
         android:layout_width="70dp"

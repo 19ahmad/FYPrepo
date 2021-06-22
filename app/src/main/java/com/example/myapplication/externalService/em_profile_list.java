@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapter;
 
 public class em_profile_list extends AppCompatActivity {
 

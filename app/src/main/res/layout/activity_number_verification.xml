@@ -28,6 +28,8 @@
         android:textSize="20sp"
         android:layout_margin="10dp"
         />
+
+
     <com.google.android.material.textfield.TextInputLayout
 
         android:layout_width="match_parent"
@@ -49,12 +51,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Verify Number"
-        android:textSize="20sp"
+        android:textSize="17.5sp"
         android:textColor="@color/white"
         android:layout_margin="10dp"
         android:padding="10dp"
         android:elevation="2dp"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/round_shape_button"
         />
     <ProgressBar
         android:id="@+id/progress_bar"

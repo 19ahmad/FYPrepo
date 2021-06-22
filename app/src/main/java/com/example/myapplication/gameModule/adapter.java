@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.R;
 
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class adapter extends RecyclerView.Adapter<adapter.viewHolder> {
         }
     }
 
-    // public com.example.myapplication.adapter(Context context, List<profile> profile_list)
+    // public com.example.myapplication.gameModule.adapter(Context context, List<profile> profile_list)
 
     @NonNull
     @Override

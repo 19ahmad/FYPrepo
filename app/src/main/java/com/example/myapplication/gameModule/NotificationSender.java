@@ -1,4 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
+
+import com.example.myapplication.gameModule.NotificationData;
 
 public class NotificationSender {
 

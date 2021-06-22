@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,38 +17,31 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.hbb20.CountryCodePicker;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class SignUp extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-
-    private EditText dob,username,password,phoneNumber,fullName;
+    private EditText dob,email,password,phoneNumber,fullName;
     private RadioButton gendermale,genderfemale;
     private Button signup_button;
     private TextView gender;
     String userID,_gender;
-    //FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
-    //FirebaseAuth fAuth = FirebaseAuth.getInstance();
+
     //DatePickerDialog.OnDateSetListener setDateListner;
     @SuppressLint("WrongViewCast")
     @Override
@@ -57,7 +51,7 @@ public class SignUp extends AppCompatActivity {
         this.setTitle("Sign up");
 
         dob = (EditText) findViewById(R.id.DOB);
-        username = (EditText) findViewById(R.id.userName);
+        email = (EditText) findViewById(R.id.eamil);
         password= (EditText) findViewById(R.id.password);
         phoneNumber = (EditText) findViewById(R.id.phone_number);
         fullName = (EditText) findViewById(R.id.fullName);
@@ -65,7 +59,6 @@ public class SignUp extends AppCompatActivity {
         genderfemale =  findViewById(R.id.genderFeMale);
         signup_button = (Button) findViewById(R.id.button_signup);
         gender = (TextView) findViewById(R.id.gender);
-        //_ccps = findViewById(R.id.ccp);
 
         Calendar calender =  Calendar.getInstance();
         final int year = calender.get(Calendar.YEAR);
@@ -90,22 +83,21 @@ public class SignUp extends AppCompatActivity {
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validateFullName() |  !validateOfBirth() | !validatePassword() | !validateUserName() | !validatePhoneNumber() | !validateGender()) {
+                if (!validateFullName() |  !validateOfBirth() | !validatePassword() | !validEmail() | !validatePhoneNumber() | !validateGender()) {
                    return;
                 }
                 else
                     {
-                        Toast.makeText(SignUp.this, "User account is created", Toast.LENGTH_LONG).show();
                         firebaseDatabase = FirebaseDatabase.getInstance();
                         databaseReference= firebaseDatabase.getReference();
                         String key = databaseReference.push().getKey();
 
 
-                        String _fullName = fullName.getText().toString().trim();
-                        String _phoneNumber = phoneNumber.getText().toString().trim();
-                        String _dob = dob.getText().toString().trim();
-                        String _password = password.getText().toString().trim();
-                        String _username = username.getText().toString().trim();
+                        final String _fullName = fullName.getText().toString().trim();
+                        final String _phoneNumber = phoneNumber.getText().toString().trim();
+                        final String _dob = dob.getText().toString().trim();
+                        final String _password = password.getText().toString().trim();
+                        final String _email = email.getText().toString().trim();
                         if (gendermale.isChecked()) {
                             _gender = "Male";
 
@@ -113,25 +105,47 @@ public class SignUp extends AppCompatActivity {
                         if (genderfemale.isChecked()) {
                             _gender = "Feamle";
                         }
+                        mAuth.createUserWithEmailAndPassword(_email, _password).addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                            {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful())
+                                    {
+                                        profileRegistration _profileRegistration = new profileRegistration(_fullName,_email,_phoneNumber,_dob,_gender);
+                                        databaseReference.child("players").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(_profileRegistration).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful())
+                                                {
+                                                    Toast.makeText(SignUp.this, "User account is created", Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(SignUp.this, main_Menu.class);
+                                                    startActivity(intent);
+                                                }
+                                            else
+                                                {
+                                                    Toast.makeText(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                    }
+                                else
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
+
+
                         final String refreshToken = FirebaseInstanceId.getInstance().getToken();
-                        profileRegistration _profileRegistration = new profileRegistration(_fullName,_username,_phoneNumber,_password,_dob,_gender);
+
                        // updateToken(key);
                         databaseReference.child("Device Tokens").child(_phoneNumber).child("token").setValue(refreshToken).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d("token", refreshToken);
                             }
-                        });
-                        databaseReference.child("players").child(key).setValue(_profileRegistration).addOnSuccessListener(new OnSuccessListener<Void>() {
-
-
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(SignUp.this, "User account is created", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(SignUp.this, main_Menu.class);
-                                startActivity(intent);
-                            }
-
                         });
 
                     }
@@ -151,18 +165,24 @@ public class SignUp extends AppCompatActivity {
             return true;
         }
     }
-    private boolean validateUserName()
+    private boolean validEmail()
     {
-            String val = username.getText().toString().trim();
+            String val = email.getText().toString().trim();
             if(val.isEmpty())
             {
-                username.setError("Username Required");
-                username.requestFocus();
+                email.setError("Email Required");
+                email.requestFocus();
+                return false;
+            }
+            if(!Patterns.EMAIL_ADDRESS.matcher(val).matches())
+            {
+                email.setError("Enter Valid Email");
+                email.requestFocus();
                 return false;
             }
             else
             {
-                username.setError(null);
+                email.setError(null);
                 // fullName.setErrorEnabled(false);
                 return true;
             }

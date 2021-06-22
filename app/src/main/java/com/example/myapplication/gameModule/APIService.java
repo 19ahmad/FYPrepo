@@ -1,4 +1,5 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
+
 import retrofit2.*;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;

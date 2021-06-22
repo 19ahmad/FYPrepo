@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
 
 import android.graphics.Bitmap;
 import android.net.Uri;

@@ -1,8 +1,8 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
 
 public class profileRegistration {
 
-    String  key,dob,username,password,phoneNumber,fullName,gender;
+    String  key,dob,email,phoneNumber,fullName,gender;
 
     //empty constructor
     public profileRegistration(){}
@@ -10,12 +10,11 @@ public class profileRegistration {
 
 
     // constructor with parameters
-    public profileRegistration(String fullName, String username, String phoneNumber, String password, String dob, String gender )
+    public profileRegistration(String fullName, String username, String phoneNumber, String dob, String gender )
     {
         //this.token = token;
         this.fullName = fullName;
-        this.username = username;
-        this.password = password;
+        this.email = username;
         this.phoneNumber = phoneNumber;
         this.dob = dob;
         this.gender = gender;
@@ -34,19 +33,11 @@ public class profileRegistration {
     }
 
     public String getUsername() {
-        return username;
+        return email;
     }
 
     public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        this.email = username;
     }
 
     public String getPhoneNumber() {
@@ -64,6 +55,7 @@ public class profileRegistration {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
     public String getGender() {
         return gender;
     }

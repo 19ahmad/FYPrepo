@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background1"
+
+    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".guess_emotion">
+    tools:context=".gameModule.guess_emotion">
     <LinearLayout
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/gradient_background">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,9 +36,8 @@
                 android:text="Player 1"
                 android:textStyle="bold"
                 android:textSize="15sp"
-                android:fontFamily="serif"
                     android:layout_marginStart="5dp"
-                android:textColor="@color/buttonColor"/>
+                android:textColor="@color/white"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -51,10 +53,9 @@
                 android:layout_height="wrap_content"
                 android:text="SCORE"
                 android:textStyle="bold"
-                android:textSize="20sp"
-                android:fontFamily="serif"
+                android:textSize="17.5sp"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/buttonColor"/>
+                android:textColor="@color/white"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,13 +63,13 @@
                 android:gravity="center_horizontal"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/design_default_color_secondary"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="101dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="60dp"
 
             android:orientation="horizontal">
 
@@ -76,15 +77,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="serif"
                 android:text="Player 2"
-                android:textColor="@color/buttonColor"
+                android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/ic_account_circle_black_player_profile_24dp" />
 
@@ -97,7 +97,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -105,9 +105,8 @@
             android:layout_height="wrap_content"
             android:text="Polarity of Message:"
             android:textColor="@color/buttonColor"
-            android:textSize="20sp"
-            android:fontFamily="serif"
-            android:textStyle="bold"
+            android:textSize="17.5sp"
+
             />
         <TextView
             android:id="@+id/polarity"
@@ -120,9 +119,7 @@
             android:layout_height="wrap_content"
             android:text="Message:"
             android:textColor="@color/buttonColor"
-            android:textSize="20sp"
-            android:fontFamily="serif"
-            android:textStyle="bold"
+            android:textSize="17.5sp"
             android:layout_marginTop="10dp"
             />
         <TextView
@@ -133,46 +130,40 @@
             android:layout_marginTop="10dp"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="275dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         app:counterEnabled="true"
         app:counterMaxLength="15"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="20dp"
+      android:layout_margin="10dp"
         app:boxStrokeColor="@color/buttonColor"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-
         <EditText
             android:id="@+id/guessEmEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Guess Emotional State.."
-            android:fontFamily="serif"
             android:ems="10"
             android:inputType="text"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColorHint="@color/buttonColor"
-
             android:padding="10dp"/>
     </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:id="@+id/submitBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_gravity="center"
-            android:fontFamily="serif"
+
+            android:layout_margin="10dp"
             android:textColor="@color/white"
-            android:text="@string/OK"
-            android:textSize="20dp"
+            android:text="submit"
+            android:textSize="15sp"
             android:background="@drawable/rounded_button_1" />
     </LinearLayout>
 
@@ -188,10 +179,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:fontFamily="serif"
             android:text="Timer:"
             android:textColor="@color/buttonColor"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -199,10 +189,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:fontFamily="serif"
+
             android:text="60"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="25sp"
+            android:textColor="@color/design_default_color_error"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
@@ -218,8 +208,7 @@
             android:layout_marginRight="15dp"
             android:text="Stop"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:fontFamily="serif"
+            android:textSize="15sp"
             android:background="@drawable/rounded_button_1"
             />
 
@@ -228,9 +217,8 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:text="Quit"
-            android:fontFamily="serif"
             android:textColor="@color/white"
             android:background="@drawable/rounded_button_1"
             />

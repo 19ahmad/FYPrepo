@@ -1,15 +1,15 @@
 package com.example.myapplication.externalService;
 
 public class RegistrationDB {
-    String fullName,phoneNo,dob,password;
+    String fullName,phoneNo,dob,email;
 
     public RegistrationDB() { }
 
-    public RegistrationDB(String fullName, String phoneNo, String dob, String passwrd) {
+    public RegistrationDB(String fullName, String phoneNo, String dob, String email) {
         this.fullName = fullName;
         this.phoneNo = phoneNo;
         this.dob = dob;
-        this.password = passwrd;
+        this.email = email;
     }
 
     public String getFullName() {
@@ -24,8 +24,8 @@ public class RegistrationDB {
         return dob;
     }
 
-    public String getPasswrd() {
-        return password;
+    public String getEmail() {
+        return email;
     }
 
     public void setFullName(String fullName) {
@@ -40,7 +40,7 @@ public class RegistrationDB {
         this.dob = dob;
     }
 
-    public void setPasswrd(String passwrd) {
-        this.password = passwrd;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -1,10 +1,12 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
@@ -21,41 +23,52 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.myapplication.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class friendsList extends AppCompatActivity {
-    private static final int CONTACTS_LOADER_ID = 1;
-    private FloatingActionButton inviteFriends;
-    private TextView contact;
-    List<ContactModel> contacts = new ArrayList<>();
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class contactsList extends AppCompatActivity implements adapter.ItemClickListener {
+    private APIService apiService;
+    String title = "Game Invitation";
+    String body = "Would you like to play game with me?";
+
+    //FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+    RecyclerView contactList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends_list);
+        setContentView(R.layout.activity_contacts_list);
+        this.setTitle("Players List");
+        contactList = findViewById(R.id.rec_contact_list);
+        contactList.setLayoutManager(new LinearLayoutManager(this));
 
-        inviteFriends = findViewById(R.id.addFriend);
-        contact = findViewById(R.id.contactNumber);
-        contacts = requestContactPermission();
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
+        List<ContactModel> contacts = requestContactPermission();
+        for (final ContactModel i : contacts){
+            Log.e("Name", i.name);
+            Log.e("Phone Number", i.mobileNumber);
 
-        inviteFriends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        }
+        adapter myadapter = new adapter(this,contacts, this);
+        contactList.setAdapter(myadapter);
 
-                for (ContactModel i : contacts){
-                    Log.e("Contact Name",i.name);
-                    Log.e("Contact Number",i.mobileNumber);
-                }
-            }
-        });
     }
+
     public List<ContactModel> requestContactPermission() {
         List<ContactModel> contacts = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -86,16 +99,14 @@ public class friendsList extends AppCompatActivity {
                 }
             } else {
 //                Toast.makeText(getApplicationContext(),getContacts(getApplicationContext()).size(),Toast.LENGTH_LONG).show();
-                contacts = getContacts(getApplicationContext());
+                  contacts = getContacts(getApplicationContext());
 
-                    //Log.e("Contacts list", contact.mobileNumber);
-
-
+                //Log.e("Contacts list", contact.mobileNumber);
             }
         } else {
             contacts = getContacts(getApplicationContext());
             Log.e("Contacts list", contacts.get(0).mobileNumber);
-            contact.setText(contacts.get(0).mobileNumber);
+            //contact.setText(contacts.get(0).mobileNumber);
         }
         return contacts;
     }
@@ -121,14 +132,17 @@ public class friendsList extends AppCompatActivity {
                     if (inputStream != null) {
                         photo = BitmapFactory.decodeStream(inputStream);
                     }
+                    ContactModel info = new ContactModel();
                     while (cursorInfo.moveToNext()) {
-                        ContactModel info = new ContactModel();
+
                         info.id = id;
                         info.name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                         info.mobileNumber = cursorInfo.getString(cursorInfo.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         info.photo = photo;
-                        info.photoURI= pURI;
+                        info.photoURI = pURI;
                         list.add(info);
+                        //final Boolean[] cond = new Boolean[1];
+
                     }
 
                     cursorInfo.close();
@@ -137,5 +151,69 @@ public class friendsList extends AppCompatActivity {
             cursor.close();
         }
         return list;
+    }
+
+    @Override
+    public void onItemClick(View view, int position)
+    {
+        FirebaseDatabase.getInstance().getReference("Device Tokens").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dt: dataSnapshot.getChildren())
+                {
+                     if(dt.child("token").getValue().toString() != null) {
+                        String userToken = dt.child("token").getValue().toString();
+                        Log.d("Token is: ", userToken);
+                        sendNotifications(userToken, body, title);
+                    }
+                    else
+                    {
+                        Toast.makeText(contactsList.this, "Token has null value", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        updateToken();
+    }
+
+    private void updateToken()
+    {
+        //FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String refreshToken = FirebaseInstanceId.getInstance().getToken();
+        profileRegistration profile_registration = new profileRegistration();
+        //profile_registration.setToken(refreshToken);
+        //FirebaseDatabase.getInstance().getReference("Device Tokens").child("token").setValue(profile_registration.getToken());
+        //Toast.makeText(this, "Token =: "+refreshToken + "Root: " +FirebaseDatabase.getInstance().getReference("players").getRoot().toString(), Toast.LENGTH_LONG).show();
+        Log.d("Token: ",refreshToken  );
+    }
+    public void sendNotifications(String userToken,String body, String title)
+    {
+        //Toast.makeText(contactsList.this, "Send Notification Failed", Toast.LENGTH_LONG).show();
+        NotificationData data = new NotificationData(body,title);
+        NotificationSender sender = new NotificationSender(data, userToken);
+
+        apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
+            @Override
+            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                if (response.code() == 200)
+                {
+
+                    if (!response.isSuccessful())
+                    {
+                        Toast.makeText(contactsList.this, "Send Notification Failed", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MyResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

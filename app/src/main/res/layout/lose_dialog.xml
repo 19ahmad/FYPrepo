@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
-    android:padding="2.5dp"
-    android:background="@drawable/rounded_layout"
-    android:orientation="vertical">
-
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp"
-        android:background="@drawable/rounded_layout"
-        app:cardBackgroundColor="@color/background"
+        app:cardCornerRadius="5dp"
+        android:elevation="50dp"
+    android:layout_margin="10dp"
         >
         <LinearLayout
-            android:background="@drawable/rounded_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,15 +24,15 @@
                     android:layout_marginTop="10dp"
                     android:src="@drawable/ic_sentiment_dissatisfied_black_24dp"/>
                 <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                android:text="@string/you_lose"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="50sp"
-                android:textStyle="italic"
-                android:fontFamily="cursive"
+                    android:text="@string/you_lose"
+                    android:textAlignment="center"
+                    android:textColor="@color/buttonColor"
+                    android:textSize="50sp"
+                    android:textStyle="italic"
+                    android:fontFamily="cursive"
                 />
 
                 <TextView
@@ -65,23 +56,23 @@
                 android:gravity="center">
 
                 <Button
-                    android:layout_width="105dp"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:textSize="15dp"
                     android:text="@string/main_menu"
-                    android:fontFamily="serif"
+                    android:layout_margin="10dp"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_button_1"
                     android:id="@+id/mainmenu"
                     />
                 <Button
-                    android:layout_width="105dp"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:textSize="15sp"
                     android:text="@string/play_again"
-                    android:fontFamily="serif"
+                    android:layout_margin="10dp"
                     android:textColor="@color/white"
                     android:background="@drawable/rounded_button_1"
                     android:id="@+id/playagain"
@@ -92,4 +83,3 @@
 
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>

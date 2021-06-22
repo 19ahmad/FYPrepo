@@ -1,14 +1,16 @@
-package com.example.myapplication;
+package com.example.myapplication.gameModule;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.example.myapplication.R;
+import com.google.android.gms.actions.ReserveIntents;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class main_Menu extends AppCompatActivity implements View.OnClickListener {
 
@@ -20,10 +22,10 @@ public class main_Menu extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_main__menue);
         this.setTitle("Home");
 
-        Button b1 = (Button) findViewById(R.id.playTrial);
-        Button b2 = (Button) findViewById(R.id.startNewGame);
-        Button b3 = (Button) findViewById(R.id.playeProfile);
-        Button b4 = (Button) findViewById(R.id.logOut);
+        CardView b1 = (CardView) findViewById(R.id.playTrial);
+        CardView b2 = (CardView) findViewById(R.id.startNewGame);
+        CardView b3 = (CardView) findViewById(R.id.playeProfile);
+        CardView b4 = (CardView) findViewById(R.id.logOut);
 
 
         b1.setOnClickListener(this);
@@ -54,6 +56,7 @@ public class main_Menu extends AppCompatActivity implements View.OnClickListener
                 break;
 
             case R.id.logOut:
+                FirebaseAuth.getInstance().signOut();
                 Intent in4 = new Intent(main_Menu.this, login.class);
                 startActivity(in4);
                 break;
