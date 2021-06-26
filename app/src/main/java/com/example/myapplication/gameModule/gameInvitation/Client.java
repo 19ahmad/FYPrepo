@@ -1,4 +1,4 @@
-package com.example.myapplication.gameModule;
+package com.example.myapplication.gameModule.gameInvitation;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

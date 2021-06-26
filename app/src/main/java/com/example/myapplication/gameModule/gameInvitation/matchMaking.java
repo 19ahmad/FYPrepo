@@ -1,4 +1,4 @@
-package com.example.myapplication.gameModule;
+package com.example.myapplication.gameModule.gameInvitation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.R;
-import com.example.myapplication.gameModule.contactsList;
 
 public class matchMaking extends AppCompatActivity {
     Button inviteFriends,inviteAll;

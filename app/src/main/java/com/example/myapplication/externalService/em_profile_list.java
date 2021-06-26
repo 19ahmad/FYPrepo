@@ -21,6 +21,6 @@ public class em_profile_list extends AppCompatActivity {
        em_profile_list.setLayoutManager(new LinearLayoutManager(this));
 
         String _array[] = { "Anees","Raheel","Nadeem","Tabib","Kaleem","Faizan","Talah","Ahmad","Ehtisham","Hamza","Manan","Umer","Talah","Ahmad","Ehtisham","Hamza","Manan","Umer","Talah","Ahmad","Ehtisham","Hamza","Manan","Umer"};
-        em_profile_list.setAdapter(new es_adapter(_array));
+        //em_profile_list.setAdapter(new es_adapter(_array));
     }
 }

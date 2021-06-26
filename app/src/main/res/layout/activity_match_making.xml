@@ -8,7 +8,7 @@
     android:gravity="center"
     android:padding="5dp"
     android:background="@color/background1"
-    tools:context=".gameModule.matchMaking">
+    tools:context=".gameModule.gameInvitation.matchMaking">
     <Button
         android:id="@+id/iButton1"
         android:layout_width="250dp"

@@ -1,4 +1,4 @@
-package com.example.myapplication.gameModule;
+package com.example.myapplication.gameModule.gameInvitation;
 
 import androidx.annotation.NonNull;
 

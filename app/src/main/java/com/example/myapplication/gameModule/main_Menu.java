@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.example.myapplication.gameModule.gameInvitation.matchMaking;
 import com.google.android.gms.actions.ReserveIntents;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -44,7 +45,7 @@ public class main_Menu extends AppCompatActivity implements View.OnClickListener
             case R.id.playTrial:
 
             case R.id.startNewGame:
-                Intent in = new Intent(getApplicationContext(), guess_topic_of_discussion.class);
+                Intent in = new Intent(getApplicationContext(), matchMaking.class);
                 startActivity(in);
                 break;
 

@@ -3,6 +3,8 @@ package com.example.myapplication.externalService;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,8 +13,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,29 +33,34 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.BlockingDeque;
+import java.util.List;
 
 public class importChat extends AppCompatActivity {
+
+    DatabaseReference mDatabase;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     private static  final int READ_REQUEST_CODE = 42;
     private static  final int PERMISSION_REQUEST_STORAGE = 1000;
+
+    FloatingActionButton uploadFile;
+    RecyclerView chatsList;
     ImageView importChat;
     TextView textView;
-    String entry;
     BufferedReader br;
-    DatabaseReference mDatabase;
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String userID;
+
+    private String userID = user.getUid();
+    private String entry;
+    private String fileName;
     private static ArrayList<HashMap<String,String>> chatData;
     private static int count;
     public String KEY = "DEFAULT";
+
+    ArrayList<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +68,13 @@ public class importChat extends AppCompatActivity {
         setContentView(R.layout.activity_import_chat);
         this.setTitle("Import Chat");
 
+        final es_adapter[] adapter = new es_adapter[1];
+        chatsList = findViewById(R.id.chatsList);
+        uploadFile = findViewById(R.id.import_chat);
+        textView = findViewById(R.id.nullItem);
 
-        importChat = findViewById(R.id.import_chat);
-        textView = findViewById(R.id.importChat);
-        mDatabase = firebaseDatabase.getReference();
+
+        chatsList.setLayoutManager(new LinearLayoutManager(this));
         count = 0;
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
@@ -72,15 +82,61 @@ public class importChat extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
 
-        importChat.setOnClickListener(new View.OnClickListener() {
+        //final int i = 1;
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("chats");
+        mDatabase.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                Log.d("Chat counts", ""+snapshot.getChildrenCount());
+
+                if(snapshot.getChildrenCount() > 0) {
+
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+
+                       String name = ds.getKey();
+                       Log.d("CHAT NAME: ", name);
+                       list.add(name);
+                    }
+                    Log.d("FILE NAME: ", String.valueOf(list.size()));
+                    adapter[0] = new es_adapter(list);
+                    chatsList.setAdapter(adapter[0]);
+                }
+                else
+                    {
+                        textView.setText("NO CHAT AVAILABLE \n UPLOAD CHAT");
+                    }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        });
+
+
+
+
+
+
+
+        uploadFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
+
+                Snackbar.make(v,"File Uploaded", Snackbar.LENGTH_LONG).setAction("Action",null).show();
                 selectChatFromStorage();
             }
+
         });
 
-        getData(mDatabase,"3156738688");
+        getData(mDatabase,userID);
 
 
 
@@ -104,21 +160,21 @@ public class importChat extends AppCompatActivity {
     }
 
 
-    private String readChat(String chat)
-    {
-        File file = new File( chat);
-        StringBuilder msg = new StringBuilder();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-            while((line = br.readLine()) != null)
-            {
-                msg.append(line);
-                msg.append("\n");
-            }
-        }catch (IOException e){e.printStackTrace();}
-        return msg.toString();
-    }
+//    private String readChat(String chat)
+//    {
+//        File file = new File( chat);
+//        StringBuilder msg = new StringBuilder();
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(file));
+//            String line;
+//            while((line = br.readLine()) != null)
+//            {
+//                msg.append(line);
+//                msg.append("\n");
+//            }
+//        }catch (IOException e){e.printStackTrace();}
+//        return msg.toString();
+//    }
 
     private void selectChatFromStorage()
     {
@@ -135,8 +191,8 @@ public class importChat extends AppCompatActivity {
             if (data != null) {
                 Uri uri = data.getData();
                 String path = uri.getPath();
-                path = this.getFilesDir()+"/"+"chat.txt";
-               // path = path.substring(path.indexOf(":") + 1);
+                //path = this.getFilesDir()+"/"+"chat.txt";
+                path = path.substring(path.indexOf(":") + 1);
 //                if (path.contains("Emulated"))
 //                {
 //                    path = path.substring(path.indexOf("0")+1);
@@ -146,6 +202,8 @@ public class importChat extends AppCompatActivity {
                 Toast.makeText(this, "Path is " + path, Toast.LENGTH_SHORT).show();
                 Log.d("PATH",path);
                 chatData = chatImporter.getData(path);
+                fileName = chatImporter.getFileName(path);
+                Log.d("Chat Name", fileName);
                // Log.d("Chat", "Chat Data : " + chatImporter.getData(path).toString());
 
                 for (HashMap<String,String> i : chatData){
@@ -155,7 +213,7 @@ public class importChat extends AppCompatActivity {
 //                    Log.d("message", " :    "+ i.get("message"));
 //                    Log.d("-------", "--------------------------------------------------------------------------------------------------------------\n\n\n");
                     Log.d("CHAT ITEMS", "List items " + chatData.size());
-                    uploadData(mDatabase,i,"3431401398");
+                    uploadData(mDatabase,i,userID,fileName);
                     count+=1;
                     Log.d("", "COUNT = "+ count);
 
@@ -165,8 +223,8 @@ public class importChat extends AppCompatActivity {
         }
     }
 
-    public void uploadData(final DatabaseReference db, HashMap<String,String> msg, final String currentUser){
-        final DatabaseReference usr = db.child("users");
+    public void uploadData(final DatabaseReference db, HashMap<String,String> msg, final String currentUser, final String fileName){
+        final DatabaseReference usr = db.child("chats");
         final HashMap<String,String> msg1 = msg;
         //final DatabaseReference[] currentUserRef = new DatabaseReference[1];
 //        usr.addValueEventListener(new ValueEventListener() {
@@ -198,7 +256,8 @@ public class importChat extends AppCompatActivity {
         String key = usr.child("chats").getRef().push().getKey();
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         String format = s.format(new Date());
-        db.child("chats").child(currentUser).child(format).child(key).getRef().setValue(msg1);
+        db.child(currentUser).child(fileName).child(key).getRef().setValue(msg1);
+
 
 
 

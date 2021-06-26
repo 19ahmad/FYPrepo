@@ -49,7 +49,11 @@ public class number_verification extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         String _phoneNo = getIntent().getStringExtra("phoneNumber");
+        phoneNumber.setText(_phoneNo);
         sendVerificationCode(_phoneNo);
+
+        //click verifyBtn for verification of phone number
+
         verifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

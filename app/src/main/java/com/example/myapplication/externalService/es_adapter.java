@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 
-public class es_adapter extends RecyclerView.Adapter<es_adapter.viewHolder>{
-    String _data[];
+import java.util.ArrayList;
+import java.util.List;
 
-    public es_adapter(String[] data) {
-        this._data = data;
+public class es_adapter extends RecyclerView.Adapter<es_adapter.viewHolder>{
+    private ArrayList<String> _data;
+
+    public es_adapter(ArrayList<String> data) {
+        this._data= data;
     }
 
     public class viewHolder extends RecyclerView.ViewHolder{
@@ -42,14 +45,19 @@ public class es_adapter extends RecyclerView.Adapter<es_adapter.viewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull es_adapter.viewHolder viewHolder, int i) {
-        viewHolder.name.setText(_data[i]);
+        viewHolder.name.setText( _data.get(i));
     }
 
     @Override
-    public int getItemCount()
-    {
-        return _data.length;
+    public int getItemCount() {
+        return _data.size();
     }
+
+//    @Override
+//    public int getItemCount()
+//    {
+//        return _data.length;
+//    }
 
 
 }
