@@ -34,12 +34,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/you_win"
+                    android:text="You have passed this level"
                     android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="50sp"
-                    android:textStyle="italic"
-                    android:fontFamily="cursive"
+                    android:textColor="@color/buttonColor"
+                    android:textSize="40sp"
+
                     />
 
                 <TextView
@@ -49,8 +48,7 @@
                     android:gravity="center"
                     android:textSize="35sp"
                     android:textStyle="bold"
-                    android:textColor="@color/buttonColor"
-                    android:fontFamily="cursive"
+                    android:textColor="@color/background2"
                     android:text="@string/congrats"/>
 
             </LinearLayout>
@@ -63,6 +61,7 @@
                 android:gravity="center">
 
                 <Button
+                    android:id="@+id/mainMenuButton"
                     android:layout_width="105dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
@@ -73,6 +72,7 @@
                     android:background="@drawable/rounded_button_1"
                     />
                 <Button
+                    android:id="@+id/playagainButton"
                     android:layout_width="105dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"

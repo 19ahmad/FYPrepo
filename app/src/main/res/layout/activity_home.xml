@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".gameModule.homeActivity">
+    tools:context=".gameModule.Home_activity">
 
     <Button
         android:id="@+id/playerLogin"

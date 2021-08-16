@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.gameModule.ContactModel;
+import com.example.myapplication.gameModule.Contact_model;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.InputStream;
@@ -34,7 +34,7 @@ public class friendsList extends AppCompatActivity {
     private static final int CONTACTS_LOADER_ID = 1;
     private FloatingActionButton inviteFriends;
     private TextView contact;
-    List<ContactModel> contacts = new ArrayList<>();
+    List<Contact_model> contacts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +50,15 @@ public class friendsList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                for (ContactModel i : contacts){
+                for (Contact_model i : contacts){
                     Log.e("Contact Name",i.name);
                     Log.e("Contact Number",i.mobileNumber);
                 }
             }
         });
     }
-    public List<ContactModel> requestContactPermission() {
-        List<ContactModel> contacts = new ArrayList<>();
+    public List<Contact_model> requestContactPermission() {
+        List<Contact_model> contacts = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -102,8 +102,8 @@ public class friendsList extends AppCompatActivity {
     }
 
 
-    public List<ContactModel> getContacts(Context ctx) {
-        List<ContactModel> list = new ArrayList<>();
+    public List<Contact_model> getContacts(Context ctx) {
+        List<Contact_model> list = new ArrayList<>();
         ContentResolver contentResolver = ctx.getContentResolver();
         Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         if (cursor.getCount() > 0) {
@@ -123,7 +123,7 @@ public class friendsList extends AppCompatActivity {
                         photo = BitmapFactory.decodeStream(inputStream);
                     }
                     while (cursorInfo.moveToNext()) {
-                        ContactModel info = new ContactModel();
+                        Contact_model info = new Contact_model();
                         info.id = id;
                         info.name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                         info.mobileNumber = cursorInfo.getString(cursorInfo.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));

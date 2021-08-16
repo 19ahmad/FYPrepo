@@ -8,7 +8,7 @@
         app:cardCornerRadius="5dp"
         app:cardBackgroundColor="@color/white"
     android:layout_margin="10dp"
-        tools:context=".gameModule.stop_menu">
+        tools:context=".gameModule.Stop_menu">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

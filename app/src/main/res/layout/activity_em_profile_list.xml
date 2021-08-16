@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".externalService.em_profile_list">
+    tools:context=".externalService.Em_profile_list">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_prof_list"
+        android:id="@+id/em_profile_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

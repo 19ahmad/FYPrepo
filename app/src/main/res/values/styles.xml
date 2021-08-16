@@ -10,7 +10,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/buttonColor</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/buttonColor</item>
         <item name="colorAccent">@color/buttonColor</item>
         <item name="actionBarTheme">@style/AppTheme.AppBarOverlay</item>
     </style>

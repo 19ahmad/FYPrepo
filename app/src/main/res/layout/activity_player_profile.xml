@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".gameModule.player_profile">
+    tools:context=".gameModule.Player_profile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,26 +99,42 @@
         android:background="@drawable/rounded_layout"
         android:backgroundTint="@color/buttonColor"
         android:elevation="10dp">
-        <TextView
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_margin="10dp"
+               android:text="Score:"
+               android:textColor="@color/white"/>
+           <TextView
+               android:id="@+id/score"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_margin="10dp"
+               android:text="0"
+               android:textColor="@color/white"/>
+       </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="score"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Level"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Type"
-            android:textColor="@color/white"/>
-
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Level:"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="0"
+                android:textColor="@color/white"/>
+        </LinearLayout>
     </LinearLayout>
     <Button
         android:id="@+id/pSignOut"

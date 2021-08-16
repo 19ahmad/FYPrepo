@@ -7,8 +7,8 @@
     android:orientation="vertical"
     android:padding="5dp"
     android:gravity="center"
-    android:background="@color/background1"
-    tools:context=".externalService.number_verification">
+    android:background="@color/white"
+    tools:context=".externalService.Number_verification">
 
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="xxxx-xxxxxxx"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/buttonColor"
         android:textSize="20sp"
         android:layout_margin="10dp"
         />

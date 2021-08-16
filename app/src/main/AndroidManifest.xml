@@ -9,43 +9,43 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/appicon"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/appicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".gameModule.splashScreen">
+        <activity android:name=".gameModule.Splash_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".externalService.emotional_profile" />
-        <activity android:name=".gameModule.gameInvitation.matchMaking" />
-        <activity android:name=".externalService.importChat" />
-        <activity android:name=".externalService.em_profile_list" />
-        <activity android:name=".externalService.number_verification" />
-        <activity android:name=".externalService.wUserSignup" />
-        <activity android:name=".externalService.wUserLogin" />
-        <activity android:name=".gameModule.login" />
-        <activity android:name=".gameModule.gameInvitation.contactsList" />
+        <activity android:name=".externalService.Emotional_profile" />
+        <activity android:name=".gameModule.gameInvitation.Match_making" />
+        <activity android:name=".externalService.Import_chat" />
+        <activity android:name=".externalService.Em_profile_list" />
+        <activity android:name=".externalService.Number_verification" />
+        <activity android:name=".externalService.User_signup" />
+        <activity android:name=".externalService.User_login" />
+        <activity android:name=".gameModule.Game_login" />
+        <activity android:name=".gameModule.gameInvitation.Contacts_list" />
         <activity android:name=".gameModule.gameInvitation.friendsList" />
-        <activity android:name=".gameModule.player_profile" />
-        <activity android:name=".gameModule.guess_emotion" />
-        <activity android:name=".gameModule.guess_topic_of_discussion"/>
-        <activity android:name=".gameModule.main_Menu" />
-        <activity android:name=".gameModule.SignUp" />
-        <activity android:name=".gameModule.homeActivity">
+        <activity android:name=".gameModule.Player_profile" />
+        <activity android:name=".gameModule.Guess_emotion" />
+        <activity android:name=".gameModule.Guess_polarity"/>
+        <activity android:name=".gameModule.Main_menu" />
+        <activity android:name=".gameModule.Game_signup" />
+        <activity android:name=".gameModule.Home_activity">
         </activity>
 
-        <service android:name=".gameModule.gameInvitation.gameInvitationService">
+        <service android:name=".gameModule.gameInvitation.Game_invitation_service">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".gameModule.gameInvitation.getDeviceToken">
+        <service android:name=".gameModule.gameInvitation.Get_device_token">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
